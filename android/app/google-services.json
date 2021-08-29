@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "114957386990",
+    "project_id": "vendorgroceryapp",
+    "storage_bucket": "vendorgroceryapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114957386990:android:fb1a0644263d37f03a9fff",
+        "android_client_info": {
+          "package_name": "com.awiskartechnology.groceryvendorapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114957386990-k0a5omm52t5r4paddp8mdfcr0l7lkktu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9NUX98ejuaxTV6BuFjhHNC57Q6KrKaoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114957386990-k0a5omm52t5r4paddp8mdfcr0l7lkktu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
