@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:grocery_vendor_app/Screens/OnBoardScreen/onboard_screen.dart';
 import 'package:grocery_vendor_app/Screens/RegisterScreen/register_screen.dart';
+import 'package:grocery_vendor_app/Screens/WelcomeScreen/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -22,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => RegisterScreen(),
+            builder: (context) => WelcomeScreen(),
           ),
         );
       },
@@ -34,9 +37,18 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Hero(
-          tag: 'logo',
-          child: Image.asset("assets/logo.png"),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset("assets/logo.png"),
+            Text(
+              "Grocery Mart",
+              style: GoogleFonts.aBeeZee(
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );
