@@ -1,6 +1,7 @@
 // All firebase related service for user
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:grocery_vendor_app/models/user_model.dart';
 
 class UserServices {
   String collection = "users";
@@ -28,6 +29,7 @@ class UserServices {
         if (doc.data() == null) {
           return null;
         }
+        return UserModel.fromSnapshot(doc);
       },
     );
   }
