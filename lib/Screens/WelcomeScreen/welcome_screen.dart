@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:grocery_vendor_app/Screens/OnBoardScreen/onboard_screen.dart';
-// import 'package:provider/provider.dart';
+import 'package:grocery_vendor_app/Services/auth_service.dart';
+import 'package:otp_text_field/otp_text_field.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   // ignore: unused_field
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  int start = 30;
+  bool wait = false;
+  String buttonName = "Send";
+  TextEditingController phoneController = TextEditingController();
+  AuthClass authClass = AuthClass();
+  String verificationIdFinal = "";
+  String smsCode = "";
+
   @override
   Widget build(BuildContext context) {
     // final auth = Provider.of<AuthProvider>(context);
@@ -42,7 +56,7 @@ class WelcomeScreen extends StatelessWidget {
                       style: GoogleFonts.aBeeZee(),
                     ),
                     SizedBox(height: 20),
-                    TextField(
+                    TextFormField(
                       decoration: InputDecoration(
                         prefixText: "+91",
                         prefixStyle: GoogleFonts.aBeeZee(
@@ -50,12 +64,39 @@ class WelcomeScreen extends StatelessWidget {
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
                         ),
+                        suffixIcon: InkWell(
+                          onTap: wait
+                              ? null
+                              : () async {
+                                  myState(() {
+                                    start = 30;
+                                    wait = true;
+                                    buttonName = "Resend";
+                                  });
+                                  await authClass.verifyPhoneNumber(
+                                      "+91 ${phoneController.text}",
+                                      context,
+                                      setData);
+                                },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 15),
+                            child: Text(
+                              buttonName,
+                              style: TextStyle(
+                                color: wait ? Colors.black : Colors.green,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
                         labelText: "10 digit phone number",
                       ),
                       keyboardType: TextInputType.phone,
                       maxLength: 10,
                       autofocus: true,
-                      controller: _phoneNumberController,
+                      controller: phoneController,
                       onChanged: (value) {
                         if (value.length == 10) {
                           myState(() {
@@ -69,6 +110,8 @@ class WelcomeScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 20),
+                    otpField(),
+                    SizedBox(height: 20),
                     Row(
                       children: [
                         Expanded(
@@ -77,11 +120,15 @@ class WelcomeScreen extends StatelessWidget {
                           child: ElevatedButton(
                             child: Text(
                               _validPhoneNumber
-                                  ? "Continue"
+                                  ? "Verify OTP"
                                   : "Ennter Your Number",
                             ),
                             onPressed: () {
-                              // ignore: unnecessary_statements
+                              authClass.signInwithPhoneNumber(
+                                verificationIdFinal,
+                                smsCode,
+                                context,
+                              );
                             },
                           ),
                         ))
@@ -142,5 +189,40 @@ class WelcomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget otpField() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: OTPTextField(
+        length: 6,
+        width: MediaQuery.of(context).size.width - 34,
+        fieldWidth: 38,
+        otpFieldStyle: OtpFieldStyle(
+          backgroundColor: Colors.green,
+          borderColor: Colors.green,
+        ),
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+        textFieldAlignment: MainAxisAlignment.spaceAround,
+        // fieldStyle: FieldStyle.underline,
+        onCompleted: (pin) {
+          print("Completed: " + pin);
+          setState(() {
+            smsCode = pin;
+          });
+        },
+      ),
+    );
+  }
+
+  void setData(String verificationId) {
+    setState(() {
+      verificationIdFinal = verificationId;
+    });
+    // startTimer();
   }
 }
