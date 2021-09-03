@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:grocery_vendor_app/Pages/home_page.dart';
 import 'package:grocery_vendor_app/Screens/Account/account_screen.dart';
 import 'package:grocery_vendor_app/Screens/Notifications/notification_screen.dart';
@@ -28,11 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
         children: screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        // backgroundColor: Colors.blue,
-        // selectedItemColor: Colors.white,
+        elevation: 50,
+        // backgroundColor: Colors.green,
+        selectedItemColor: Colors.green,
         // unselectedItemColor: Colors.green,
         // iconSize: 30,
         // selectedFontSize: 20,
+        // selectedLabelStyle: GoogleFonts.aBeeZee(color: Colors.black),
         // unselectedFontSize: 20,
         showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
