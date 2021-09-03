@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:grocery_vendor_app/Screens/OnBoardScreen/onboard_screen.dart';
-import 'package:grocery_vendor_app/Screens/RegisterScreen/register_screen.dart';
+import 'package:grocery_vendor_app/Screens/Home/home_screen.dart';
 import 'package:grocery_vendor_app/Screens/WelcomeScreen/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,11 +22,25 @@ class _SplashScreenState extends State<SplashScreen> {
         seconds: 3,
       ),
       () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WelcomeScreen(),
-          ),
+        FirebaseAuth.instance.authStateChanges().listen(
+          (User? user) {
+            // ignore: unnecessary_null_comparison
+            if (user == null) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WelcomeScreen(),
+                ),
+              );
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ),
+              );
+            }
+          },
         );
       },
     );
